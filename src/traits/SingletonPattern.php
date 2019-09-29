@@ -55,13 +55,16 @@ trait SingletonPattern
 
     /**
      * 获取实例
-     * @param array $config 配置信息
-     * @param bool  $force  是否强制重新实例化
-     * @return mixed
+     * @param array  $config    配置信息
+     * @param bool   $force     是否强制重新实例化
+     * @param string $className 指定Facade对应类名称
+     * @return static|mixed
      */
-    protected static function getInstances(array $config = [], bool $force = false)
+    protected static function getInstance(array $config = [], bool $force = false, string $className = '')
     {
-        $className = static::class;
+        if (empty($className)) {
+            $className = static::class;
+        }
         if ($force === true || !isset(self::$instances[$className]) || !self::$instances[$className] instanceof $className) {
             $instance                    = new $className($config);
             self::$instances[$className] = $instance;
@@ -79,7 +82,7 @@ trait SingletonPattern
      */
     public static function make(array $config = [], bool $force = false)
     {
-        return self::getInstances($config, $force);
+        return self::getInstance($config, $force);
     }
 
     /**
@@ -125,6 +128,27 @@ trait SingletonPattern
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * 调用实际类中的方法
+     * @param string $method 方法名
+     * @param array  $params 参数
+     * @return mixed
+     */
+    public static function __callStatic(string $method, array $params)
+    {
+        $className = self::make()->getFacadeClass();
+        return call_user_func_array([self::getInstance([], false, $className), $method], $params);
+    }
+
+    /**
+     * 获取当前Facade对应类名
+     * @return string
+     */
+    protected function getFacadeClass(): string
+    {
+        return static::class;
     }
 
     /**
