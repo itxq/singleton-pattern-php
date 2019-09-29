@@ -20,23 +20,23 @@ namespace itxq\traits;
 trait SingletonPattern
 {
     /**
-     * @var array - 实例
+     * @var array 实例
      */
     protected static $instances = [];
 
     /**
-     * @var array - 配置信息
+     * @var array 配置信息
      */
     protected $config = [];
 
     /**
-     * @var mixed - 反馈信息
+     * @var mixed 反馈信息
      */
-    protected $message = '';
+    protected $message = [];
 
     /**
      * SingletonPattern 构造函数.
-     * @param array $config - 配置信息
+     * @param array $config 配置信息
      */
     public function __construct(array $config = [])
     {
@@ -45,7 +45,7 @@ trait SingletonPattern
     }
 
     /**
-     * @title      初始化加载
+     * 初始化加载
      * @author     IT小强
      * @createTime 2019-03-05 20:56:55
      */
@@ -54,14 +54,12 @@ trait SingletonPattern
     }
 
     /**
-     * @title      单利模式 - 返回本类对象
-     * @param array $config - 配置信息
-     * @param bool  $force  - 是否强制重新实例化
-     * @return static|mixed
-     * @author     IT小强
-     * @createTime 2019-03-05 20:40:34
+     * 获取实例
+     * @param array $config 配置信息
+     * @param bool  $force  是否强制重新实例化
+     * @return mixed
      */
-    public static function make(array $config = [], bool $force = false)
+    protected static function getInstances(array $config = [], bool $force = false)
     {
         $className = static::class;
         if ($force === true || !isset(self::$instances[$className]) || !self::$instances[$className] instanceof $className) {
@@ -72,7 +70,20 @@ trait SingletonPattern
     }
 
     /**
-     * @tile       设置配置
+     * 单利模式 返回本类对象
+     * @param array $config 配置信息
+     * @param bool  $force  是否强制重新实例化
+     * @return static|mixed
+     * @author     IT小强
+     * @createTime 2019-03-05 20:40:34
+     */
+    public static function make(array $config = [], bool $force = false)
+    {
+        return self::getInstances($config, $force);
+    }
+
+    /**
+     * 设置配置
      * @param string|array $key   配置项名称
      * @param mixed        $value 配置项值
      * @return static|mixed
@@ -90,7 +101,7 @@ trait SingletonPattern
     }
 
     /**
-     * @title      获取配置信息
+     * 获取配置信息
      * @param string $key     为空获取全部配置信息
      * @param null   $default 默认值
      * @return array|mixed
@@ -106,7 +117,7 @@ trait SingletonPattern
     }
 
     /**
-     * @title      获取反馈信息
+     * 获取反馈信息
      * @return mixed
      * @author     IT小强
      * @createTime 2019-03-05 20:39:55
@@ -117,7 +128,7 @@ trait SingletonPattern
     }
 
     /**
-     * @title      克隆防止继承
+     * 克隆防止继承
      * @author     IT小强
      * @createTime 2019-03-05 20:39:41
      */
