@@ -65,11 +65,11 @@ trait SingletonPattern
         if (empty($className)) {
             $className = static::class;
         }
-        if ($force === true || !isset(SingletonPattern::$instances[$className]) || !SingletonPattern::$instances[$className] instanceof $className) {
-            $instance                                = new $className($config);
-            SingletonPattern::$instances[$className] = $instance;
+        if ($force === true || !isset(static::$instances[$className]) || !static::$instances[$className] instanceof $className) {
+            $instance                      = new $className($config);
+            static::$instances[$className] = $instance;
         }
-        return SingletonPattern::$instances[$className];
+        return static::$instances[$className];
     }
 
     /**
@@ -82,7 +82,7 @@ trait SingletonPattern
      */
     public static function make(array $config = [], bool $force = false)
     {
-        return SingletonPattern::getInstance($config, $force);
+        return static::getInstance($config, $force);
     }
 
     /**
@@ -100,7 +100,7 @@ trait SingletonPattern
         } else {
             $this->config[$key] = $value;
         }
-        return SingletonPattern::$instances[static::class];
+        return static::$instances[static::class];
     }
 
     /**
@@ -138,10 +138,8 @@ trait SingletonPattern
      */
     public static function __callStatic(string $method, array $params)
     {
-        return call_user_func_array(
-            [SingletonPattern::getInstance([], false, static::getFacadeClass()), $method],
-            $params
-        );
+        $instance = static::getInstance([], false, static::getFacadeClass());
+        return call_user_func_array([$instance, $method], $params);
     }
 
     /**
