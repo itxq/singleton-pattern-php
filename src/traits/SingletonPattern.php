@@ -89,7 +89,7 @@ trait SingletonPattern
      * 设置配置
      * @param string|array $key   配置项名称
      * @param mixed        $value 配置项值
-     * @return static|mixed
+     * @return static|null
      * @author     IT小强
      * @createTime 2019-03-05 20:37:37
      */
@@ -100,7 +100,7 @@ trait SingletonPattern
         } else {
             $this->config[$key] = $value;
         }
-        return static::$instances[static::class];
+        return static::$instances[static::class] ?? null;
     }
 
     /**
