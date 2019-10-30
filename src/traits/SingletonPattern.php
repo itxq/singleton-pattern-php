@@ -38,7 +38,7 @@ trait SingletonPattern
      * SingletonPattern 构造函数.
      * @param array $config 配置信息
      */
-    public function __construct(array $config = [])
+    public function __construct(?array $config = [])
     {
         $this->config = array_merge($this->config, $config);
         $this->initialize();
@@ -60,7 +60,7 @@ trait SingletonPattern
      * @param string $className 指定Facade对应类名称
      * @return static|mixed
      */
-    protected static function getInstance(array $config = [], bool $force = false, string $className = '')
+    protected static function getInstance(?array $config = [], bool $force = false, string $className = '')
     {
         if (empty($className)) {
             $className = static::class;
@@ -80,7 +80,7 @@ trait SingletonPattern
      * @author     IT小强
      * @createTime 2019-03-05 20:40:34
      */
-    public static function make(array $config = [], bool $force = false)
+    public static function make(?array $config = [], bool $force = false)
     {
         return static::getInstance($config, $force);
     }
@@ -96,7 +96,11 @@ trait SingletonPattern
     public function setConfig($key, $value = null)
     {
         if (is_array($key)) {
-            $this->config = array_merge($this->config, $key);
+            if ($value === true) {
+                $this->config = $key;
+            } else {
+                $this->config = array_merge($this->config, $key);
+            }
         } else {
             $this->config[$key] = $value;
         }
