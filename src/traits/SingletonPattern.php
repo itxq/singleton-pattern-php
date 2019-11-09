@@ -46,8 +46,6 @@ trait SingletonPattern
 
     /**
      * 初始化加载
-     * @author     IT小强
-     * @createTime 2019-03-05 20:56:55
      */
     protected function initialize(): void
     {
@@ -77,8 +75,6 @@ trait SingletonPattern
      * @param array $config 配置信息
      * @param bool  $force  是否强制重新实例化
      * @return static|mixed
-     * @author     IT小强
-     * @createTime 2019-03-05 20:40:34
      */
     public static function make(?array $config = [], bool $force = false)
     {
@@ -89,9 +85,7 @@ trait SingletonPattern
      * 设置配置
      * @param string|array $key   配置项名称
      * @param mixed        $value 配置项值
-     * @return static|null
-     * @author     IT小强
-     * @createTime 2019-03-05 20:37:37
+     * @return static|mixed
      */
     public function setConfig($key, $value = null)
     {
@@ -112,8 +106,6 @@ trait SingletonPattern
      * @param string $key     为空获取全部配置信息
      * @param null   $default 默认值
      * @return array|mixed
-     * @author     IT小强
-     * @createTime 2019-03-30 10:46:49
      */
     public function getConfig(string $key = '', $default = null)
     {
@@ -126,8 +118,6 @@ trait SingletonPattern
     /**
      * 获取反馈信息
      * @return mixed
-     * @author     IT小强
-     * @createTime 2019-03-05 20:39:55
      */
     public function getMessage()
     {
@@ -157,8 +147,6 @@ trait SingletonPattern
 
     /**
      * 克隆防止继承
-     * @author     IT小强
-     * @createTime 2019-03-05 20:39:41
      */
     final private function __clone()
     {
