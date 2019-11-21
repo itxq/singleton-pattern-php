@@ -32,7 +32,12 @@ trait SingletonPattern
     /**
      * @var mixed 反馈信息
      */
-    protected $message = [];
+    protected $message;
+
+    /**
+     * @var mixed 当前数据
+     */
+    protected $data;
 
     /**
      * SingletonPattern 构造函数.
@@ -116,12 +121,43 @@ trait SingletonPattern
     }
 
     /**
+     * 设置反馈信息
+     * @param mixed $message 反馈信息
+     * @return static|mixed
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+        return static::$instances[static::class] ?? null;
+    }
+
+    /**
      * 获取反馈信息
      * @return mixed
      */
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * 设置数据
+     * @param mixed $data 数据
+     * @return static|mixed
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+        return static::$instances[static::class] ?? null;
+    }
+
+    /**
+     * 获取数据
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
