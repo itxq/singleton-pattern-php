@@ -76,6 +76,16 @@ trait SingletonPattern
     }
 
     /**
+     * 返回本类对象，强制实例化
+     * @param array $config 配置信息
+     * @return static|mixed
+     */
+    public static function makeForce(?array $config = [])
+    {
+        return static::make($config, true);
+    }
+
+    /**
      * 单利模式 返回本类对象
      * @param array $config 配置信息
      * @param bool  $force  是否强制重新实例化
